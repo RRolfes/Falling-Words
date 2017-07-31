@@ -24,7 +24,7 @@ In addition, this project will include:
 This app will have a single screen that is comprised of the game screen , game controls, and nav links. Users will type words using the keyboard and the words will disappear from the screen upon completion.
 
 
-![wireframes](./docs/falling_words.png)
+![wireframes](./docs/falling_words.jpg)
 
 
 This project will be implemented with the following technologies:
