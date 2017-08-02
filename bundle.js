@@ -74,7 +74,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 document.addEventListener('DOMContentLoaded', () => {
   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
-
+  // debugger
+  // game.startRound();
+  // debugger
 });
 
 
@@ -84,6 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environment__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__target__ = __webpack_require__(3);
+
 
 
 class Game {
@@ -93,6 +97,30 @@ class Game {
     this.screenHeight = canvas.height;
 
     Object(__WEBPACK_IMPORTED_MODULE_0__environment__["a" /* default */])(this);
+    this.startRound = this.startRound.bind(this);
+    this.startRound();
+
+  }
+
+  startRound() {
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    // ctx.clearRect(0, 0, c.width, c.height);
+
+    this.count = 4;
+    this.dropInterval = 1000;
+
+    this.roundLoop = setInterval(() => {
+      ctx.clearRect(0, 0, c.width, c.height);
+      if (this.count > 0) {
+        const target = new __WEBPACK_IMPORTED_MODULE_1__target__["a" /* default */]();
+        // console.log(target);
+        // target.drop.bind(target);
+        this.count--;
+      } else {
+        clearInterval(this.roundLoop);
+      }
+    }, this.dropInterval);
   }
 }
 
@@ -104,56 +132,80 @@ class Game {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-let canvas, ctx, city, game;
+let canvas, ctx, background, currentGame;
 
-function render(g) {
-  game = g;
+function render(game) {
+  currentGame = game;
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
 
-  city = document.getElementById('city');
-  window.requestAnimationFrame(renderFrame);
+  // background = document.getElementById('background');
+  window.requestAnimationFrame(renderRepaint);
 }
 
-function renderFrame() {
+function renderRepaint() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   renderBackground();
 
-  // switch (game.stage) {
-  //   case Stages.NOT_STARTED:
-  //     renderTitleScreen();
-  //     break;
-  //
-  //   case Stages.PLAYING:
-  //     renderMissiles();
-  //     renderHud();
-  //     break;
-  //
-  //   case Stages.PAUSED:
-  //     renderPauseScreen();
-  //     break;
-  //
-  //   case Stages.WAVE_LOST:
-  //     renderGameOverScreen();
-  //     break;
-  //
-  //   case Stages.WAVE_WON:
-  //     renderWaveCompleteScreen();
-  //     break;
-  // }
 
-  // Testing only. Show game stage
-  // ctx.fillText(game.stage, 20, 20);
-
-  window.requestAnimationFrame(() => renderFrame());
+  window.requestAnimationFrame(() => renderRepaint());
 }
 
 const renderBackground = () => {
-  ctx.drawImage(city, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(0, 0, canvas.width, canvas.height);
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (render);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const screenWidth = 900;
+const words = ['a', 'be', 'see', 'deed', 'fifth', 'sixths', 'seventh'];
+const level = 1;
+
+class Target {
+  constructor() {
+    this.screenWidth = 900;
+    // get the word that will be the target
+    // need library of words
+    // font size?
+    this.target = words[Math.floor(Math.random() * words.length)];
+
+    // where to start (math to have words appear from all over top of screen)
+    this.x = Math.random() * (screenWidth - 50) + 25;
+    this.y = 0;
+
+    // import level
+    this.speed = (level * 20);
+
+    this.drop();
+
+  }
+
+  drop() {
+    const fallSpeed = setInterval(() => {
+      this.y += 5;
+      this.draw();
+    }, this.speed);
+  }
+
+  draw() {
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.font = "30px Arial";
+    // ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillText(this.target, this.x, this.y);
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Target);
 
 
 /***/ })

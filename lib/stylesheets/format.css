@@ -1,0 +1,18 @@
+
+.master {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90vh;
+}
+
+h1 {
+  font-size: 48px;
+  padding-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
