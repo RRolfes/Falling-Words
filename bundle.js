@@ -182,12 +182,14 @@ class Game {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-let canvas, ctx, background, currentGame;
+let canvas, ctx, background, currentGame, screenWidth, screenHeight;
 
 function render(game) {
   currentGame = game;
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
+  screenWidth = canvas.width;
+  screenHeight = canvas.height;
 
   // background = document.getElementById('background');
   window.requestAnimationFrame(renderRepaint);
@@ -198,6 +200,7 @@ function renderRepaint() {
 
 
   renderWords();
+  displayGameInfo();
 
   // renderBackground();
 
@@ -218,11 +221,14 @@ const renderWords = () => {
       currentGame.lives--;
       currentGame.removeTarget(target);
     } else if (target.solved) {
-      currentGame.score += 10; //add logic for increasing points
       currentGame.removeTarget(target);
     }
 
   });
+};
+
+const displayGameInfo = () => {
+  ctx.fillText(`Score: ${currentGame.score}`, screenWidth - 225, screenHeight - 10);
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (render);

@@ -8,6 +8,10 @@
   height: 90vh;
 }
 
+canvas {
+  border: 1px solid;
+}
+
 h1 {
   font-size: 48px;
   padding-bottom: 10px;
