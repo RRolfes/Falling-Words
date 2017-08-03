@@ -77,7 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // debugger
   // game.startRound();
   // debugger
+
+  handleInput(game);
 });
+
+const handleInput = (game) => {
+  document.getElementsByTagName('body')[0].addEventListener('keydown', (e) => {
+    game.handleInput(e);
+  });
+};
 
 
 /***/ }),
@@ -97,9 +105,11 @@ class Game {
     this.screenHeight = canvas.height;
 
     this.targets = [];
+    this.score = 0;
+    this.answer = '';
 
     Object(__WEBPACK_IMPORTED_MODULE_0__environment__["a" /* default */])(this);
-    this.startRound = this.startRound.bind(this);
+    // this.startRound = this.startRound.bind(this);
     this.startRound();
 
   }
@@ -128,10 +138,36 @@ class Game {
 
   }
 
+
+  handleInput(e) {
+    const keyCode = e.which;
+    // console.log(keyCode);
+
+    if (this.lives > 0) {
+      console.log(keyCode);
+      if (keyCode >= 65 && keyCode <= 90){
+        this.answer += e.key;
+      } else if (keyCode === 13) {
+        this.checkInput(this.answer);
+        this.answer = "";
+      }
+    }
+  }
+
   removeTarget(target) {
     const idx = this.targets.indexOf(target);
     this.targets.splice(idx, 1);
-    debugger
+  }
+
+  checkInput(input) {
+    console.log(input);
+    this.targets.forEach((target) => {
+      if ( input === target.target ) {
+        this.score += 10;
+        target.solved = true;
+      }
+    });
+    console.log(this.score);
   }
 
 
@@ -182,7 +218,8 @@ const renderWords = () => {
       currentGame.lives--;
       currentGame.removeTarget(target);
     } else if (target.solved) {
-      currentGame.points += 10; //add logic for increasing points
+      currentGame.score += 10; //add logic for increasing points
+      currentGame.removeTarget(target);
     }
 
   });
@@ -212,6 +249,8 @@ class Target {
     // where to start (math to have words appear from all over top of screen)
     this.x = Math.random() * (this.screenWidth - 50) + 25;
     this.y = 0;
+
+    this.solved = false;
 
     // import level
     this.speed = (level * 20);
