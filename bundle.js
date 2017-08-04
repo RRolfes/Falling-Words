@@ -147,6 +147,8 @@ class Game {
       console.log(keyCode);
       if (keyCode >= 65 && keyCode <= 90){
         this.answer += e.key;
+      } else if (keyCode === 8) {
+        this.answer = this.answer.slice(0, -1);
       } else if (keyCode === 13) {
         this.checkInput(this.answer);
         this.answer = "";
@@ -206,6 +208,7 @@ function renderRepaint() {
   displayGameInfo();
 
   // renderBackground();
+  console.log("hellooo");
 
   window.requestAnimationFrame(() => renderRepaint());
 }
