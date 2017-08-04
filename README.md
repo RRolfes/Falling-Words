@@ -2,14 +2,14 @@
 
 ### Background
 
-Falling Words is an educational app used to allow users to gamify practicing ones typing skills. The app will be created using HTML/CSS, vanilla JavaScript, and jQuery. The game is simple, yet engaging. Players type words before they fall to the bottom of the screen. If the player types the word correctly, he or she is awarded points. The game has levels, which increase in speed, word complexity, and words per minute. To increase the games functionality, words will also fall at different speeds and have different features.
+Falling Words is an educational app used to allow users to gamify practicing ones typing skills. The app will be created using HTML/CSS and vanilla JavaScrip. The game is simple, yet engaging. Players type words before they fall to the bottom of the screen. If the player types the word correctly, he or she is awarded points. The game increases in speed as more words are answered correctly.
 
 
 ### Functionality & MVP
 
 With Falling Words, users will be able to:
 
-- [ ] Start, pause, and restart the game
+- [ ] Start, play, and restart the game on loss
 - [ ] Type words and phrases before they hit the bottom of the screen
 - [ ] Be awarded points for correct answers and have lives deducted for failures
 - [ ] Difficulty increases as the game progresses
@@ -31,15 +31,14 @@ This project will be implemented with the following technologies:
 
 - Vanilla JavaScript for overall structure and logic,
 - HTML/CSS for rendering and graphics
-- Easel.js with HTML5 Canvas for DOM manipulation and rendering,
+- HTML5 Canvas for DOM manipulation and rendering,
 - Webpack to bundle and serve up the various scripts.
 
 Additionally, various scripts will be involved in this project including:
 
-`target.js` which will handle the logic common to all falling words
-`bounce.js` these words hit the bottom and bounce up, giving the player another chance at them
-`life.js` this script will render a word to fall that, if answered correctly, awards the player another life
-`bomb.js` a bomb word is the opposite of a life; it detracts a life if the player answers correctly
+- `target.js` will handle the logic common to all falling words
+- `environment.js` will be responsible for animations and screen rendering
+- `game.js` will handle the game logic and increasing the difficulty as the player progresses
 
 
 ### Implementation Timeline
@@ -50,17 +49,15 @@ Additionally, various scripts will be involved in this project including:
 
 **Day 2**: Finish setting up word difficulty logic for increasing levels
 
-- Words can fall simultaneously, but at different speeds and with other, different characteristics applied
-- Finish different types of word logic
+- Words can fall simultaneously, at increasing speeds
 
-**Day 3**: Build out life and bomb words and keep track of accumulating score. Goals for the day:
+**Day 3**: Keep track of accumulating score and lives through iterations. Goals for the day:
 
-- Be able to add and detract a life to the player's "lives" count
-- Accurately tally and display the players ever changing score. The score will be a function of the level of difficulty, number of words, type of words, word complexity, etc.
+- Use recursion to increase the interval while preserving the state of the game - score and lives remaining
+- Accurately tally and display the players ever changing score
 
 **Day 4**: Style game and make it look nice. Goals for the day:
 
-- All words finished
 - Player can type words to neutralize them and is awarded points accurately
 - Style the game well to make it intuitive and enjoyable
 
