@@ -11,8 +11,8 @@ With Falling Words, users will be able to:
 
 - [ ] Start, pause, and restart the game
 - [ ] Type words and phrases before they hit the bottom of the screen
-- [ ] Be awarded an increasing number of points as the level of difficulty increases
-- [ ] Turn off and on sound through a mute button
+- [ ] Be awarded points for correct answers and have lives deducted for failures
+- [ ] Difficulty increases as the game progresses
 
 In addition, this project will include:
 
@@ -29,7 +29,7 @@ This app will have a single screen that is comprised of the game screen , game c
 
 This project will be implemented with the following technologies:
 
-- Vanilla JavaScript and `jquery` for overall structure and logic,
+- Vanilla JavaScript for overall structure and logic,
 - HTML/CSS for rendering and graphics
 - Easel.js with HTML5 Canvas for DOM manipulation and rendering,
 - Webpack to bundle and serve up the various scripts.
@@ -38,14 +38,13 @@ Additionally, various scripts will be involved in this project including:
 
 `target.js` which will handle the logic common to all falling words
 `bounce.js` these words hit the bottom and bounce up, giving the player another chance at them
-`zag.js` these words move about diagonally, giving the user more time to answer, while simultaneously making it more difficult to keep track of the word
 `life.js` this script will render a word to fall that, if answered correctly, awards the player another life
 `bomb.js` a bomb word is the opposite of a life; it detracts a life if the player answers correctly
-`size.js` this will handle the different font size words will have, with smaller words receiving more points
+
 
 ### Implementation Timeline
 
-**Day 1**: Setup all necessary Node modules, including getting webpack working and `Easel.js` installed. Goals for the day:
+**Day 1**: Setup all necessary Node modules, including getting webpack working. Goals for the day:
 
 - Create the main playing field and be able to generate words
 

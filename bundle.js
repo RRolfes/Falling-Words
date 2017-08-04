@@ -107,44 +107,42 @@ class Game {
     this.targets = [];
     this.score = 0;
     this.answer = '';
+    this.lives = 3;
 
     Object(__WEBPACK_IMPORTED_MODULE_0__environment__["a" /* default */])(this);
     // this.startRound = this.startRound.bind(this);
-    this.startRound();
+    this.startRound(this.lives);
 
   }
 
-  startRound() {
-    this.count = 0;
-    this.lives = 3;
-    this.dropInterval = 2000;
+  startRound(lives) {
+    this.count = 1;
+    this.lives = lives;
+    this.dropInterval = 1000 - (this.score / 2);
 
     this.roundLoop = setInterval(() => {
-      if (this.lives > 0) {
-        console.log(this.count);
+      if (this.lives > 0 && this.count % 2 !== 0) {
+
         const target = new __WEBPACK_IMPORTED_MODULE_1__target__["a" /* default */]();
         this.targets.push(target);
-        // console.log(this.targets);
+
         target.drop();
         this.count++;
-        // if (this.count % 2 === 0) {
-        //   this.dropInterval += 2000;
-        //   console.log(this.dropInterval);
-        // }
+
       } else {
         clearInterval(this.roundLoop);
+        this.startRound(this.lives);
       }
     }, this.dropInterval);
-
+    // console.log(this.dropInterval);
   }
 
 
   handleInput(e) {
     const keyCode = e.which;
-    // console.log(keyCode);
+    console.log(keyCode);
 
     if (this.lives > 0) {
-      console.log(keyCode);
       if (keyCode >= 65 && keyCode <= 90){
         this.answer += e.key;
       } else if (keyCode === 8) {
@@ -153,6 +151,8 @@ class Game {
         this.checkInput(this.answer);
         this.answer = "";
       }
+    } else if (keyCode === 32 ) {
+      window.location.reload();
     }
   }
 
@@ -166,14 +166,12 @@ class Game {
   }
 
   checkInput(input) {
-    console.log(input);
     this.targets.forEach((target) => {
       if ( input === target.target ) {
         this.score += 10;
         target.solved = true;
       }
     });
-    console.log(this.score);
   }
 
 
@@ -208,7 +206,6 @@ function renderRepaint() {
   displayGameInfo();
 
   // renderBackground();
-  console.log("hellooo");
 
   window.requestAnimationFrame(() => renderRepaint());
 }
@@ -223,7 +220,7 @@ const renderWords = () => {
     ctx.font="30px Verdana";
     ctx.fillText(target.target, target.x, target.y);
 
-    if (target.y === canvas.height) {
+    if (target.y === canvas.height - 33) {
       currentGame.lives--;
       currentGame.removeTarget(target);
     } else if (target.solved) {
@@ -246,7 +243,9 @@ const displayGameInfo = () => {
   ctx.fillText(`${currentGame.answer}`, screenWidth/2 , screenHeight - 10);
 
   if (currentGame.lives === 0) {
+    currentGame.answer = '';
     ctx.fillText("Game Over!", screenWidth/2, screenHeight/2);
+    ctx.fillText("Press space to restart", screenWidth/2, screenHeight/2 + 30);
   }
 };
 
@@ -259,26 +258,21 @@ const displayGameInfo = () => {
 
 "use strict";
 
-// const words = ['a', 'be', 'see', 'deed', 'fifth', 'sixths', 'seventh'];
 const words = ['a', 'be', 'see', 'deed', 'fifth', 'sixths', 'seventh'];
-const level = 1;
+
 
 class Target {
   constructor() {
     this.screenWidth = 900;
-    // get the word that will be the target
-    // need library of words
-    // font size?
+
     this.target = words[Math.floor(Math.random() * words.length)];
 
-    // where to start (math to have words appear from all over top of screen)
-    this.x = Math.random() * (this.screenWidth - 50) + 25;
+    this.x = Math.random() * (this.screenWidth - 100) + 25;
     this.y = 0;
 
     this.solved = false;
 
-    // import level
-    this.speed = (level * 20);
+    this.speed = 20;
 
     this.drop();
 
@@ -286,21 +280,12 @@ class Target {
 
   drop() {
     const fallSpeed = setInterval(() => {
-      this.y += 1;
-      // this.draw();
+      this.y += 1.5;
     }, this.speed);
   }
 
-  hitBottom(screenHeight) {
-    return this.y > screenHeight;
-  }
-
-  // draw() {
-  //   var c = document.getElementById("canvas");
-  //   var ctx = c.getContext("2d");
-  //   ctx.font = "30px Arial";
-  //   // ctx.clearRect(0, 0, c.width, c.height);
-  //   ctx.fillText(this.target, this.x, this.y);
+  // hitBottom(screenHeight) {
+  //   return this.y > screenHeight - 30;
   // }
 
 }
