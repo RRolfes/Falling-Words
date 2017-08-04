@@ -1,67 +1,36 @@
-# Falling-Words
+# Falling Words
 
-### Background
+A game to increase one's typing speed while having fun!
 
-Falling Words is an educational app used to allow users to gamify practicing ones typing skills. The app will be created using HTML/CSS and vanilla JavaScrip. The game is simple, yet engaging. Players type words before they fall to the bottom of the screen. If the player types the word correctly, he or she is awarded points. The game increases in speed as more words are answered correctly.
+[live link](https://rrolfes.github.io/Falling-Words/)
 
+## Overview
 
-### Functionality & MVP
+_Falling Words_ is a very intuitive game. It's simplicity and challenging nature make the game for all ages and extremely addicting.
 
-With Falling Words, users will be able to:
+A player is given three lives at the start of the game. Words immediately start falling from the top of the screen and the player must type them in correctly and hit enter to solve the word. If he or she answers the word correctly before it hits the bottom of the screen, ten points are awarded and the word disappears. If he or she does not answer the word correctly before it hits the bottom of the screen, a life id deducted. With each correctly answered word, the game gets a little bit harder!
 
-- [ ] Start, play, and restart the game on loss
-- [ ] Type words and phrases before they hit the bottom of the screen
-- [ ] Be awarded points for correct answers and have lives deducted for failures
-- [ ] Difficulty increases as the game progresses
+## Functionality
 
-In addition, this project will include:
+The game works by listening to the keys the user types in and comparing them to the target words that are on the screen.
 
-- [ ] A production README
+A player can see the keys he or she has pressed upon pressing any letter on the keyboard.
 
+If the player needs to delete a letter, he or she can by pressing backspace.
 
-### Wireframes
+Words are random words are generated at the top of the screen and fall naturally down the page.
 
-This app will have a single screen that is comprised of the game screen , game controls, and nav links. Users will type words using the keyboard and the words will disappear from the screen upon completion.
+The word generation speed increasing via a recursive call, which increases the word generation speed based on the players score, while being sure to preserve the player's current score and number of lives.
 
+If the player loses all of his or her lives, he or she is prompted to restart the game via pressing the space bar.
 
-![wireframes](./docs/falling_words.jpg)
+## Screenshot
 
+![screenshot](./Docs/Screenshot.png)
 
-This project will be implemented with the following technologies:
+## Technologies Used
 
-- Vanilla JavaScript for overall structure and logic,
-- HTML/CSS for rendering and graphics
-- HTML5 Canvas for DOM manipulation and rendering,
-- Webpack to bundle and serve up the various scripts.
-
-Additionally, various scripts will be involved in this project including:
-
-- `target.js` will handle the logic common to all falling words
-- `environment.js` will be responsible for animations and screen rendering
-- `game.js` will handle the game logic and increasing the difficulty as the player progresses
-
-
-### Implementation Timeline
-
-**Day 1**: Setup all necessary Node modules, including getting webpack working. Goals for the day:
-
-- Create the main playing field and be able to generate words
-
-**Day 2**: Finish setting up word difficulty logic for increasing levels
-
-- Words can fall simultaneously, at increasing speeds
-
-**Day 3**: Keep track of accumulating score and lives through iterations. Goals for the day:
-
-- Use recursion to increase the interval while preserving the state of the game - score and lives remaining
-- Accurately tally and display the players ever changing score
-
-**Day 4**: Style game and make it look nice. Goals for the day:
-
-- Player can type words to neutralize them and is awarded points accurately
-- Style the game well to make it intuitive and enjoyable
-
-### Bonus Features
-
-- [ ] A version for keyboard shortcuts
-- [ ] A math version in which small math problems drop (e.g. "5 x 4")
+- Vanilla JavaScript was used for the structure and logic of this project
+- HTML5 canvas was used for the animation and setup of the game
+- JavaScript files were bundled using Webpack
+- No additional libraries were implemented
