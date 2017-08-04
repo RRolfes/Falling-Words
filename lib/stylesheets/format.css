@@ -10,6 +10,7 @@
 
 canvas {
   border: 1px solid;
+  background-color: lightgrey;
 }
 
 h1 {

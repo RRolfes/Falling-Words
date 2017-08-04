@@ -157,6 +157,10 @@ class Game {
   removeTarget(target) {
     const idx = this.targets.indexOf(target);
     this.targets.splice(idx, 1);
+
+    if (this.lives === 0) {
+      this.targets = [];
+    }
   }
 
   checkInput(input) {
@@ -198,7 +202,6 @@ function render(game) {
 function renderRepaint() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
   renderWords();
   displayGameInfo();
 
@@ -228,7 +231,20 @@ const renderWords = () => {
 };
 
 const displayGameInfo = () => {
-  ctx.fillText(`Score: ${currentGame.score}`, screenWidth - 225, screenHeight - 10);
+  ctx.font="30px Verdana";
+
+  ctx.textAlign="left";
+  ctx.fillText(`Score: ${currentGame.score}`, 30, screenHeight - 10);
+
+  ctx.textAlign="right";
+  ctx.fillText(`Lives: ${currentGame.lives}`, screenWidth - 30, screenHeight - 10);
+
+  ctx.textAlign="center";
+  ctx.fillText(`${currentGame.answer}`, screenWidth/2 , screenHeight - 10);
+
+  if (currentGame.lives === 0) {
+    ctx.fillText("Game Over!", screenWidth/2, screenHeight/2);
+  }
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (render);
