@@ -90,8 +90,10 @@ const handleInput = (game) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environment__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__target__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environment__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__target__ = __webpack_require__(3);
+
 
 
 
@@ -103,7 +105,7 @@ class Game {
 
     this.reset();
 
-    Object(__WEBPACK_IMPORTED_MODULE_0__environment__["a" /* default */])(this);
+    Object(__WEBPACK_IMPORTED_MODULE_1__environment__["a" /* default */])(this);
     this.startRound(this.lives);
 
   }
@@ -113,6 +115,7 @@ class Game {
     this.score = 0;
     this.answer = '';
     this.lives = 3;
+    this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */];
   }
 
   startRound(lives) {
@@ -123,7 +126,7 @@ class Game {
     this.roundLoop = setInterval(() => {
       if (this.lives > 0 && this.count % 2 !== 0) {
 
-        const target = new __WEBPACK_IMPORTED_MODULE_1__target__["a" /* default */]();
+        const target = new __WEBPACK_IMPORTED_MODULE_2__target__["a" /* default */]();
         this.targets.push(target);
 
         target.drop();
@@ -194,6 +197,8 @@ function render(game) {
   window.requestAnimationFrame(renderRepaint);
 }
 
+// note test
+// This is the where the recursive call to rAF() happens
 function renderRepaint() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   let background1 = document.getElementById("background");
@@ -275,6 +280,31 @@ class Target {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Target);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const NOT_STARTED = 0;
+/* harmony export (immutable) */ __webpack_exports__["a"] = NOT_STARTED;
+
+const PLAYING = 1;
+/* unused harmony export PLAYING */
+
+const PAUSED = 2;
+/* unused harmony export PAUSED */
+
+const ROUND_WON = 3;
+/* unused harmony export ROUND_WON */
+
+const ROUND_LOST = 4;
+/* unused harmony export ROUND_LOST */
+
+const GAME_OVER = 5;
+/* unused harmony export GAME_OVER */
+
 
 
 /***/ })
