@@ -131,7 +131,6 @@ class Game {
     this.reset();
 
     Object(__WEBPACK_IMPORTED_MODULE_1__environment__["a" /* default */])(this);
-    // this.startRound(this.lives);
 
   }
 
@@ -142,6 +141,7 @@ class Game {
     this.lives = 3;
     this.paused = false;
     this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */];
+    this.missed = [];
   }
 
   startRound(lives) {
@@ -335,6 +335,7 @@ const renderWords = () => {
     ctx.fillText(target.target, target.x, target.y);
 
     if (target.y === canvas.height - 33) {
+      currentGame.missed.push(target.target);
       currentGame.lives--;
       currentGame.removeTarget(target);
     } else if (target.solved) {
@@ -360,7 +361,8 @@ const displayGameInfo = () => {
     currentGame.answer = '';
     ctx.fillText("Game Over!", screenWidth/2, screenHeight/3);
     ctx.fillText(`Your score: ${currentGame.score}`, screenWidth/2, screenHeight/3 + 50);
-    ctx.fillText("Press SPACE to restart", screenWidth/2, screenHeight/3 +100);
+    ctx.fillText("Press SPACE to restart", screenWidth/2, screenHeight/3 + 100);
+    ctx.fillText(`Missed words: ${currentGame.missed[0]}, ${currentGame.missed[1]}, ${currentGame.missed[2]}`, screenWidth/2, screenHeight/3 + 150);
   }
 };
 
