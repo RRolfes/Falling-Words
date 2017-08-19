@@ -359,10 +359,19 @@ const displayGameInfo = () => {
 
   if (currentGame.lives === 0) {
     currentGame.answer = '';
+
+    ctx.font = "30px Verdana";
+    ctx.fillStyle = 'black';
+
     ctx.fillText("Game Over!", screenWidth/2, screenHeight/3);
     ctx.fillText(`Your score: ${currentGame.score}`, screenWidth/2, screenHeight/3 + 50);
     ctx.fillText("Press SPACE to restart", screenWidth/2, screenHeight/3 + 100);
+
+    ctx.font = "30px Verdana";
+    ctx.fillStyle = 'red';
     ctx.fillText(`Missed words: ${currentGame.missed[0]}, ${currentGame.missed[1]}, ${currentGame.missed[2]}`, screenWidth/2, screenHeight/3 + 150);
+
+    ctx.fillStyle = 'black';
   }
 };
 
