@@ -194,7 +194,7 @@ function render(game) {
   window.requestAnimationFrame(renderRepaint);
 }
 
-// note test
+// note test123
 // This is the where the recursive call to rAF() happens
 function renderRepaint() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
