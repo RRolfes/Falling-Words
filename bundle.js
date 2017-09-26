@@ -106,7 +106,7 @@ class Game {
     this.reset();
 
     Object(__WEBPACK_IMPORTED_MODULE_1__environment__["a" /* default */])(this);
-    this.startRound(this.lives);
+    // this.startRound(this.lives);
 
   }
 
@@ -119,6 +119,8 @@ class Game {
   }
 
   startRound(lives) {
+    this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */];
+
     this.count = 1;
     this.lives = lives;
     this.dropInterval = 1000 - (this.score);
@@ -143,19 +145,48 @@ class Game {
   handleInput(e) {
     const keyCode = e.which;
 
-    if (this.lives > 0) {
-      if (keyCode >= 65 && keyCode <= 90){
-        this.answer += e.key;
-      } else if (keyCode === 8) {
-        this.answer = this.answer.slice(0, -1);
-      } else if (keyCode === 13) {
-        this.checkInput(this.answer);
-        this.answer = "";
-      }
-    } else if (keyCode === 32 ) {
-      window.location.reload();
+    switch(this.stage){
+      case __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */]:
+        if (keyCode === 32) {
+          this.startRound(3);
+        }
+        break;
+
+      case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */]:
+        if (this.lives > 0) {
+          if (keyCode >= 65 && keyCode <= 90){
+            this.answer += e.key;
+          } else if (keyCode === 8) {
+            this.answer = this.answer.slice(0, -1);
+          } else if (keyCode === 13) {
+            this.checkInput(this.answer);
+            this.answer = "";
+          }
+        } else if (keyCode === 32 ) {
+          this.reset();
+          this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */];
+        }
+        break;
+
+
+      // case Stages.PAUSED:
+      //   if (keyCode === 32) {
+      //     this.unpause();
+      //   }
+
     }
+
   }
+
+// // need to unpause missiles too? Yes - otherwise keep falling
+//   unpause() {
+//     this.stage = Stages.PLAYING;
+//   }
+//
+// // need to puase missiles too?
+//   pause() {
+//     this.stage = Stages.PAUSED;
+//   }
 
   removeTarget(target) {
     const idx = this.targets.indexOf(target);
@@ -185,6 +216,9 @@ class Game {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(4);
+
+
 let canvas, ctx, background, currentGame, screenWidth, screenHeight;
 
 function render(game) {
@@ -198,16 +232,53 @@ function render(game) {
 }
 
 // note test
-// This is the where the recursive call to rAF() happens
+// This is where the recursive call to rAF() happens
 function renderRepaint() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  let background1 = document.getElementById("background");
-  ctx.drawImage(background1, 0, 0, 900, 635);
-  renderWords();
+
+  renderBackground();
+
+  switch(currentGame.stage){
+    case __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */]:
+      renderInstructions();
+      break;
+
+    case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */]:
+      renderWords();
+      break;
+  }
+
+  // put two below in case stages.PLAYING:
+  // renderWords();
   displayGameInfo();
 
   window.requestAnimationFrame(() => renderRepaint());
 }
+
+const renderOverlay = () => {
+  ctx.fillStyle = "rgba(100, 100, 100, 0.7)";
+  ctx.fillRect(0, 0, currentGame.screenWidth, currentGame.screenHeight);
+};
+
+const renderInstructions = () => {
+  ctx.font = 24;
+  ctx.fillText("Instructions", currentGame.screenWidth / 2, 180);
+
+  ctx.font = 18;
+  ctx.fillText("Type the words that", currentGame.screenWidth / 2, 220);
+  ctx.fillText("appear on-screen", currentGame.screenWidth / 2, 240);
+
+  ctx.fillText("Press ENTER to submit a word", currentGame.screenWidth / 2, 270);
+  ctx.fillText("before it reaches the ground", currentGame.screenWidth / 2, 290);
+
+  ctx.fillText("Press ESCAPE at any", currentGame.screenWidth / 2, 370);
+  ctx.fillText("time to pause the Game", currentGame.screenWidth / 2, 390);
+};
+
+const renderBackground = () => {
+  background = document.getElementById("background");
+  ctx.drawImage(background, 0, 0, 900, 635);
+};
 
 const renderWords = () => {
   currentGame.targets.forEach((target) => {
@@ -291,7 +362,7 @@ const NOT_STARTED = 0;
 /* harmony export (immutable) */ __webpack_exports__["a"] = NOT_STARTED;
 
 const PLAYING = 1;
-/* unused harmony export PLAYING */
+/* harmony export (immutable) */ __webpack_exports__["b"] = PLAYING;
 
 const PAUSED = 2;
 /* unused harmony export PAUSED */
