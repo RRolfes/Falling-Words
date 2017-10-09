@@ -115,28 +115,31 @@ class Game {
     this.score = 0;
     this.answer = '';
     this.lives = 3;
+    this.paused = false;
     this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */];
   }
 
   startRound(lives) {
-    this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */];
+    this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */];
 
     this.count = 1;
     this.lives = lives;
     this.dropInterval = 1000 - (this.score);
 
     this.roundLoop = setInterval(() => {
-      if (this.lives > 0 && this.count % 2 !== 0) {
+      if(!this.paused) {
+        if (this.lives > 0 && this.count % 2 !== 0) {
 
-        const target = new __WEBPACK_IMPORTED_MODULE_2__target__["a" /* default */]();
-        this.targets.push(target);
+          const target = new __WEBPACK_IMPORTED_MODULE_2__target__["a" /* default */]();
+          this.targets.push(target);
 
-        target.drop();
-        this.count++;
+          target.drop();
+          this.count++;
 
-      } else {
-        clearInterval(this.roundLoop);
-        this.startRound(this.lives);
+        } else {
+          clearInterval(this.roundLoop);
+          this.startRound(this.lives);
+        }
       }
     }, this.dropInterval);
   }
@@ -152,7 +155,13 @@ class Game {
         }
         break;
 
-      case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */]:
+      case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PAUSED */]:
+        if (keyCode === 27) {
+          this.unpause();
+        }
+        break;
+
+      case __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */]:
         if (this.lives > 0) {
           if (keyCode >= 65 && keyCode <= 90){
             this.answer += e.key;
@@ -161,32 +170,34 @@ class Game {
           } else if (keyCode === 13) {
             this.checkInput(this.answer);
             this.answer = "";
+          } else if (keyCode === 27) {
+            this.pause();
           }
         } else if (keyCode === 32 ) {
           this.reset();
-          this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */];
+          this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */];
         }
         break;
-
-
-      // case Stages.PAUSED:
-      //   if (keyCode === 32) {
-      //     this.unpause();
-      //   }
 
     }
 
   }
 
-// // need to unpause missiles too? Yes - otherwise keep falling
-//   unpause() {
-//     this.stage = Stages.PLAYING;
-//   }
-//
-// // need to puase missiles too?
-//   pause() {
-//     this.stage = Stages.PAUSED;
-//   }
+  pause() {
+    if (this.stage === __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */]) {
+      this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PAUSED */];
+      this.paused = true;
+      this.targets.forEach((target) => target.pause());
+    }
+  }
+
+  unpause() {
+    if (this.stage === __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PAUSED */]) {
+      this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */];
+      this.paused = false;
+      this.targets.forEach((target) => target.unpause());
+    }
+  }
 
   removeTarget(target) {
     const idx = this.targets.indexOf(target);
@@ -243,8 +254,12 @@ function renderRepaint() {
       renderInstructions();
       break;
 
-    case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PLAYING */]:
+    case __WEBPACK_IMPORTED_MODULE_0__stages__["c" /* PLAYING */]:
       renderWords();
+      break;
+
+    case __WEBPACK_IMPORTED_MODULE_0__stages__["b" /* PAUSED */]:
+      renderPauseScreen();
       break;
   }
 
@@ -254,6 +269,15 @@ function renderRepaint() {
 
   window.requestAnimationFrame(() => renderRepaint());
 }
+
+const renderPauseScreen = () => {
+  renderOverlay();
+
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.font = 24;
+  ctx.fillText("Game Paused. Press ESC to resume.", currentGame.screenWidth / 2, 250);
+};
 
 const renderOverlay = () => {
   ctx.fillStyle = "rgba(100, 100, 100, 0.7)";
@@ -337,6 +361,7 @@ class Target {
 
     this.solved = false;
     this.speed = 20;
+    this.paused = false;
 
     this.drop();
 
@@ -344,8 +369,18 @@ class Target {
 
   drop() {
     const fallSpeed = setInterval(() => {
-      this.y += 1.5;
+      if (!this.paused) {
+        this.y += 1.5;
+      }
     }, this.speed);
+  }
+
+  pause() {
+    this.paused = true;
+  }
+
+  unpause() {
+    this.paused = false;
   }
 
 }
@@ -362,10 +397,10 @@ const NOT_STARTED = 0;
 /* harmony export (immutable) */ __webpack_exports__["a"] = NOT_STARTED;
 
 const PLAYING = 1;
-/* harmony export (immutable) */ __webpack_exports__["b"] = PLAYING;
+/* harmony export (immutable) */ __webpack_exports__["c"] = PLAYING;
 
 const PAUSED = 2;
-/* unused harmony export PAUSED */
+/* harmony export (immutable) */ __webpack_exports__["b"] = PAUSED;
 
 const ROUND_WON = 3;
 /* unused harmony export ROUND_WON */
