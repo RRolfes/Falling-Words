@@ -273,10 +273,11 @@ function renderRepaint() {
 const renderPauseScreen = () => {
   renderOverlay();
 
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "black";
   ctx.textAlign = "center";
   ctx.font = 24;
-  ctx.fillText("Game Paused. Press ESC to resume.", currentGame.screenWidth / 2, 250);
+  ctx.fillText("Game Paused!", currentGame.screenWidth / 2, 250);
+  ctx.fillText("Press ESC to resume", currentGame.screenWidth / 2, 280);
 };
 
 const renderOverlay = () => {
@@ -291,12 +292,10 @@ const renderInstructions = () => {
   ctx.font = 15;
   ctx.fillText("Type the words that appear on-screen and", currentGame.screenWidth / 2, 220);
   ctx.fillText("hit ENTER before they reach the ground", currentGame.screenWidth / 2, 250);
-
   // ctx.fillText("Press ENTER to submit a word", currentGame.screenWidth / 2, 270);
   // ctx.fillText("before it reaches the ground", currentGame.screenWidth / 2, 295);
-
-  ctx.fillText("Press ESCAPE at any", currentGame.screenWidth / 2, 370);
-  ctx.fillText("time to pause the Game", currentGame.screenWidth / 2, 395);
+  ctx.fillText("Hit ESC to pause", currentGame.screenWidth / 2, 320);
+  ctx.fillText("Press SPACE to start playing!", currentGame.screenWidth / 2, 380);
 };
 
 const renderBackground = () => {
@@ -335,7 +334,7 @@ const displayGameInfo = () => {
   if (currentGame.lives === 0) {
     currentGame.answer = '';
     ctx.fillText("Game Over!", screenWidth/2, screenHeight/2);
-    ctx.fillText("Press space to restart", screenWidth/2, screenHeight/2 + 30);
+    ctx.fillText("Press SPACE to restart", screenWidth/2, screenHeight/2 + 30);
   }
 };
 
@@ -348,7 +347,7 @@ const displayGameInfo = () => {
 
 "use strict";
 
-const words = ["adult", "aeroplane", "air", "aircraft", "carrier", "airforce", "airport", "album", "alphabet", "apple", "arm", "army", "baby", "baby", "backpack", "balloon", "banana", "bank", "barbecue", "bathroom", "bathtub", "bed", "bed", "bee", "bible", "bible", "bird", "bomb", "book", "boss", "bottle", "bowl", "box", "boy", "brain", "bridge", "butterfly", "button", "cappuccino", "car", "carpet", "carrot", "cave", "chair", "chess", "board", "chief", "child", "chisel", "chocolates", "church", "church", "circle", "circus", "circus", "clock", "clown", "coffee", "comet", "compact", "disc", "compass", "computer", "crystal", "cup", "cycle", "data", "base", "desk", "diamond", "dress", "drill", "drink", "drum", "dung", "ears", "earth", "egg", "electricity", "elephant", "eraser", "explosive", "eyes", "family", "fan", "feather", "festival", "film", "finger", "fire", "floodlight", "flower", "foot", "fork", "freeway", "fruit", "fungus", "game", "garden", "gas", "gate", "gemstone", "girl", "gloves", "god", "grapes", "guitar", "hammer", "hat", "hieroglyph", "highway", "horoscope", "horse", "hose", "ice", "insect", "jet", "fighter", "junk", "kaleidoscope", "kitchen", "knife", "leather", "jacket", "leg", "library", "liquid", "magnet", "man", "map", "maze", "meat", "meteor", "microscope", "milk", "milkshake", "mist", "money", "monster", "mosquito", "mouth", "nail", "navy", "necklace", "needle", "onion", "paintbrush", "pants", "parachute", "passport", "pebble", "pendulum", "pepper", "perfume", "pillow", "plane", "planet", "pocket", "potato", "printer", "prison", "pyramid", "radar", "rainbow", "record", "restaurant", "rifle", "ring", "robot", "rock", "rocket", "roof", "room", "rope", "saddle", "salt", "sandpaper", "sandwich", "satellite", "school", "ship", "shoes", "shop", "shower", "signature", "skeleton", "slave", "snail", "software", "solid", "space", "shuttle", "spectrum", "sphere", "spice", "spiral", "spoon", "spot", "light", "square", "staircase", "star", "stomach", "sun", "sunglasses", "surveyor", "swimming", "pool", "sword", "table", "tapestry", "teeth", "telescope", "television", "tennis", "racquet", "thermometer", "tiger", "toilet", "tongue", "torch", "torpedo", "train", "treadmill", "triangle", "tunnel", "typewriter", "umbrella", "vacuum", "vampire", "videotape", "vulture", "water", "weapon", "web", "wheelchair", "window", "woman", "worm"];
+const words = ["adult", "aeroplane", "air", "aircraft", "carrier", "airforce", "airport", "album", "alphabet", "apple", "arm", "army", "baby", "baby", "backpack", "balloon", "banana", "bank", "barbecue", "bathroom", "bathtub", "bed", "bed", "bee", "bible", "bible", "bird", "bomb", "book", "boss", "bottle", "bowl", "box", "boy", "brain", "bridge", "butterfly", "button", "cappuccino", "car", "carpet", "carrot", "cave", "chair", "chess", "board", "chief", "child", "chisel", "chocolates", "church", "church", "circle", "circus", "circus", "clock", "clown", "coffee", "comet", "compact", "disc", "compass", "computer", "crystal", "cup", "cycle", "data", "base", "desk", "diamond", "dress", "drill", "drink", "drum", "dung", "ears", "earth", "egg", "electricity", "elephant", "eraser", "explosive", "eyes", "family", "fan", "feather", "festival", "film", "finger", "fire", "floodlight", "flower", "foot", "fork", "freeway", "fruit", "fungus", "game", "garden", "gas", "gate", "gemstone", "girl", "gloves", "god", "grapes", "guitar", "hammer", "hat", "hieroglyph", "highway", "horoscope", "horse", "hose", "ice", "insect", "jet", "fighter", "junk", "kitchen", "knife", "leather", "jacket", "leg", "library", "liquid", "magnet", "man", "map", "maze", "meat", "meteor", "microscope", "milk", "milkshake", "mist", "money", "monster", "mosquito", "mouth", "nail", "navy", "necklace", "needle", "onion", "paintbrush", "pants", "parachute", "passport", "pebble", "pendulum", "pepper", "perfume", "pillow", "plane", "planet", "pocket", "potato", "printer", "prison", "pyramid", "radar", "rainbow", "record", "restaurant", "rifle", "ring", "robot", "rock", "rocket", "roof", "room", "rope", "saddle", "salt", "sandpaper", "sandwich", "satellite", "school", "ship", "shoes", "shop", "shower", "signature", "skeleton", "slave", "snail", "software", "solid", "space", "shuttle", "spectrum", "sphere", "spice", "spiral", "spoon", "spot", "light", "square", "staircase", "star", "stomach", "sun", "sunglasses", "surveyor", "swimming", "pool", "sword", "table", "tapestry", "teeth", "telescope", "television", "tennis", "racquet", "thermometer", "tiger", "toilet", "tongue", "torch", "torpedo", "train", "treadmill", "triangle", "tunnel", "typewriter", "umbrella", "vacuum", "vampire", "videotape", "vulture", "water", "weapon", "web", "wheelchair", "window", "woman", "worm"];
 
 
 class Target {
