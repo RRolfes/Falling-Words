@@ -394,7 +394,7 @@ class Target {
   drop() {
     const fallSpeed = setInterval(() => {
       if (!this.paused) {
-        this.y += 1.5;
+        this.y += 1;
       }
     }, this.speed);
   }
