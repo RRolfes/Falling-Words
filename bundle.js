@@ -137,7 +137,7 @@ class Game {
 
   reset() {
     this.targets = [];
-    this.score = 180;
+    this.score = 0;
     this.answer = '';
     this.lives = 3;
     this.paused = false;
@@ -394,7 +394,7 @@ class Target {
   drop() {
     const fallSpeed = setInterval(() => {
       if (!this.paused) {
-        this.y += 1;
+        this.y += 1.5;
       }
     }, this.speed);
   }
