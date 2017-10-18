@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,8 +68,33 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+const NOT_STARTED = 0;
+/* harmony export (immutable) */ __webpack_exports__["a"] = NOT_STARTED;
+
+const PLAYING = 1;
+/* harmony export (immutable) */ __webpack_exports__["c"] = PLAYING;
+
+const PAUSED = 2;
+/* harmony export (immutable) */ __webpack_exports__["b"] = PAUSED;
+
+const ROUND_WON = 3;
+/* unused harmony export ROUND_WON */
+
+const ROUND_LOST = 4;
+/* unused harmony export ROUND_LOST */
+
+const GAME_OVER = 5;
+/* unused harmony export GAME_OVER */
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game__ = __webpack_require__(2);
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -86,13 +111,13 @@ const handleInput = (game) => {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environment__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__target__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__target__ = __webpack_require__(4);
 
 
 
@@ -112,7 +137,7 @@ class Game {
 
   reset() {
     this.targets = [];
-    this.score = 0;
+    this.score = 180;
     this.answer = '';
     this.lives = 3;
     this.paused = false;
@@ -223,11 +248,11 @@ class Game {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stages__ = __webpack_require__(0);
 
 
 let canvas, ctx, background, currentGame, screenWidth, screenHeight;
@@ -342,7 +367,7 @@ const displayGameInfo = () => {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -385,31 +410,6 @@ class Target {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Target);
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const NOT_STARTED = 0;
-/* harmony export (immutable) */ __webpack_exports__["a"] = NOT_STARTED;
-
-const PLAYING = 1;
-/* harmony export (immutable) */ __webpack_exports__["c"] = PLAYING;
-
-const PAUSED = 2;
-/* harmony export (immutable) */ __webpack_exports__["b"] = PAUSED;
-
-const ROUND_WON = 3;
-/* unused harmony export ROUND_WON */
-
-const ROUND_LOST = 4;
-/* unused harmony export ROUND_LOST */
-
-const GAME_OVER = 5;
-/* unused harmony export GAME_OVER */
-
 
 
 /***/ })
