@@ -138,7 +138,7 @@ class Game {
     this.targets = [];
     this.score = 0;
     this.answer = '';
-    this.lives = 3;
+    this.lives = 5;
     this.paused = false;
     this.stage = __WEBPACK_IMPORTED_MODULE_0__stages__["a" /* NOT_STARTED */];
     this.missed = [];
